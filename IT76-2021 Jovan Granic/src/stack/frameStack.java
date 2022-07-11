@@ -26,10 +26,7 @@ import javax.swing.SwingConstants;
 public class frameStack extends JFrame{
 	private JPanel contentPane;
 	private DefaultListModel<Circle> dlm;
-	
-//	private DefaultListModel<Circle> dlm = new DefaultListModel<Circle>();
-//	Circle circle = new Circle(new Point(1, 1), 2);
-//	
+		
 	private JList listCircle;
 	
 
@@ -121,8 +118,6 @@ public class frameStack extends JFrame{
 		
 		JScrollPane scrlPaneRect = new JScrollPane();
 		contentPane.add(scrlPaneRect, BorderLayout.CENTER);
-		
-		//dlm.addElement(circle);
 		
 		scrlPaneRect.setViewportView(listCircle);
 		listCircle.setModel(dlm);

@@ -30,15 +30,6 @@ public class addDialogStack extends JDialog {
 	private JTextField radiusField = new JTextField();
 	private boolean isOk;
 	
-//	public static void main(String[] args) {
-//		try {
-//			addDialogStack dialog = new addDialogStack();
-//			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-//			dialog.setVisible(true);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
 	
 	public addDialogStack(boolean isRemoving, Circle circle) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
