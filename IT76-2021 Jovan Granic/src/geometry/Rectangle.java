@@ -3,116 +3,127 @@ package geometry;
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class Rectangle extends Shape {
+public class Rectangle extends ShapeSurface {
 	private Point upperLeftPoint;
-	private int height;
 	private int width;
-	
-	 public Rectangle () {
-		 this.upperLeftPoint = new Point();
-	 }
-	 
-	public Rectangle(Point upperLeftPoint, int height, int width)  {
-		this.upperLeftPoint = upperLeftPoint;
-		this.height = height;
-		this.width = width;
+	private int height;
+
+	public Rectangle() {
 	}
-	
-	public Rectangle(Point upperLeftPoint, int height, int width, boolean selected) {
-		this(upperLeftPoint, height, width);
+
+	public Rectangle(Point upperLeftPoint, int width, int height) {
+		this.upperLeftPoint = upperLeftPoint;
+		this.width = width;
+		this.height = height;
+	}
+
+	public Rectangle(Point upperLeftPoint, int width, int height, Color edgeColor, Color fillColor) {
+		this(upperLeftPoint, width, height);
+		this.color = edgeColor;
+		this.fillColor = fillColor;
+	}
+
+	public Rectangle(Point upperLeftPoint, int width, int height, Color edgeColor, Color fillColor, boolean selected) {
+		this(upperLeftPoint, width, height, edgeColor, fillColor);
 		this.selected = selected;
 	}
-	
-	public double area() {
-		return (this.height * this.width);
-	}
-	
-	public double circumference() {
-		return 2*(this.height + this.width);
+
+	public boolean equals(Object obj) {
+		if (obj instanceof Rectangle) {
+			Rectangle pomocna = (Rectangle) obj;
+			if (this.upperLeftPoint.equals(pomocna.upperLeftPoint) && this.width == pomocna.width
+					&& this.height == pomocna.height)
+				return true;
+			else
+				return false;
+		} else
+			return false;
 	}
 
-	public Point getUpperLeftPoint() {
-		return this.upperLeftPoint;
+	public boolean contains(int x, int y) {
+		return x >= upperLeftPoint.getX() && x <= this.upperLeftPoint.getX() + width && y >= upperLeftPoint.getY()
+				&& y <= getUpperLeftPoint().getY() + height;
 	}
 
-	public void setUpperLeftPoint(Point upperLeftPoint) {
-		this.upperLeftPoint = upperLeftPoint;
+	public boolean contains(Point clickPoint) {
+		return clickPoint.getX() >= upperLeftPoint.getX() && clickPoint.getX() <= this.upperLeftPoint.getX() + width
+				&& clickPoint.getY() >= upperLeftPoint.getY()
+				&& clickPoint.getY() <= getUpperLeftPoint().getY() + getHeight();
+	}
+
+	public int area() {
+		return width * height;
+	}
+
+	public int circumference() {
+		return 2 * (width + height);
+	}
+
+	@Override
+	public void moveTo(int x, int y) {
+		upperLeftPoint.moveTo(x, y);
+	}
+
+	@Override
+	public void moveBy(int byX, int byY) {
+		upperLeftPoint.moveBy(byX, byY);
+	}
+
+	@Override
+	public int compareTo(Object obj) {
+		if (obj instanceof Rectangle) {
+			Rectangle shapeToCompare = (Rectangle) obj;
+			return this.area() - shapeToCompare.area();
+		}
+		return 0;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
 	}
 
 	public int getHeight() {
-		return this.height;
+		return height;
 	}
 
 	public void setHeight(int height) {
 		this.height = height;
 	}
 
-	public int getWidth() {
-		return this.width;
+	public void setUpperLeftPoint(Point upperLeftPoint) {
+		this.upperLeftPoint = upperLeftPoint;
 	}
 
-	public void setWidth(int width) {
-		this.width = width;
+	public Point getUpperLeftPoint() {
+		return upperLeftPoint;
 	}
-	
-	@Override
+
 	public String toString() {
-		//return "Upper left point: (" + this.upperLeftPoint.getX() + "," + this.upperLeftPoint.getY() + "), width = "+ this.width + ", height = "+ this.height;
-		return "Upper left point: " + this.upperLeftPoint + ", width = "+ this.width + ", height = "+ this.height;
+		return "Upper left point:" + upperLeftPoint + ", width =" + width + ",height = " + height;
 	}
-	
+
 	@Override
-	public boolean equals(Object o) {
-		if (o instanceof Rectangle) {
-			Rectangle r = (Rectangle)o;
-			return (r.getUpperLeftPoint().equals(this.upperLeftPoint) &&
-					r.getHeight() == this.height && r.getWidth() == this.width);
-		} else {
-			return false;
-		}
+	public void fill(Graphics g) {
+		g.setColor(fillColor);
+		g.fillRect(this.upperLeftPoint.getX() + 1, this.upperLeftPoint.getY() + 1, this.width - 1, this.height - 1);
 	}
-	
-	public boolean contains(int x, int y) {
-		if(x > this.upperLeftPoint.getX() && x < this.upperLeftPoint.getX() + width
-				&& y > this.upperLeftPoint.getY() && y < this.getUpperLeftPoint().getY() + height) {
-			return true;
-		}
-		return false;
-	}
-	
-	public boolean contains(Point point) {
-		if(point.getX() > this.upperLeftPoint.getX() && point.getX() < this.upperLeftPoint.getX() + width
-				&& point.getY()> this.upperLeftPoint.getY() && point.getY() < this.getUpperLeftPoint().getY() + height) {
-			return true;
-		}
-		return false;
-	}
-	
+
+	@Override
 	public void draw(Graphics g) {
-		g.drawRect(this.upperLeftPoint.getX(), this.upperLeftPoint.getY(), this.width, this.height);
-		if(this.isSelected()) {
+		g.setColor(this.color);
+		g.drawRect(upperLeftPoint.getX(), upperLeftPoint.getY(), width, height);
+		this.fill(g);
+		if (isSelected()) {
 			g.setColor(Color.blue);
-			g.drawRect(this.upperLeftPoint.getX() - 2, this.upperLeftPoint.getY() - 2, 4, 4);
-			g.drawRect(this.upperLeftPoint.getX() + this.width - 2, this.upperLeftPoint.getY() - 2, 4, 4);
-			g.drawRect(this.upperLeftPoint.getX() - 2, this.upperLeftPoint.getY() + this.height - 2, 4, 4);
-			g.drawRect(this.upperLeftPoint.getX() + this.width  - 2, this.upperLeftPoint.getY() + this.height - 2, 4, 4);
+			g.drawRect(upperLeftPoint.getX() - 2, upperLeftPoint.getY() - 2, 4, 4);
+			g.drawRect(upperLeftPoint.getX() + width - 2, upperLeftPoint.getY() - 2, 4, 4);
+			g.drawRect(upperLeftPoint.getX() - 2, upperLeftPoint.getY() + height - 2, 4, 4);
+			g.drawRect(upperLeftPoint.getX() + width - 2, upperLeftPoint.getY() + height - 2, 4, 4);
 			g.setColor(Color.black);
 		}
-
-	}
-	
-	public void moveTo(int x, int y) {
-		this.upperLeftPoint.moveTo(x, y);
-	}
-	
-	public void moveBy(int x, int y) {
-		this.upperLeftPoint.moveBy(x, y);
-	}
-	
-	public int compareTo(Object o) {
-		if (o instanceof Rectangle) {
-			return (int) (this.area() - ((Rectangle) o).area());
-		}
-		return 0;
 	}
 }

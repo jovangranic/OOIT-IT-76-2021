@@ -21,9 +21,10 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.BoxLayout;
+import java.awt.Color;
+import java.awt.SystemColor;
 
 public class addDialogStack extends JDialog {
-	//private JPanel contentPane = new JPanel();
 	private JPanel contentPane;
 	private JTextField xField = new JTextField();
 	private JTextField yField = new JTextField();
@@ -33,11 +34,12 @@ public class addDialogStack extends JDialog {
 	
 	public addDialogStack(boolean isRemoving, Circle circle) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(300, 300, 500, 500);
+		setBounds(300, 300, 400, 350);
 		getContentPane().setLayout(new BorderLayout());
 		contentPane = new JPanel(new GridLayout(4, 1));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPane, BorderLayout.CENTER);
+		setTitle("Circle information:");
 		setModal(true);
 	
 		
@@ -123,6 +125,13 @@ public class addDialogStack extends JDialog {
 	}
 	
 		
+		//default constructor za frameSort
+	public addDialogStack() {
+		setBackground(Color.LIGHT_GRAY);
+		getContentPane().setBackground(Color.WHITE);
+	}
+
+
 
 	public JTextField getxField() {
 		return xField;

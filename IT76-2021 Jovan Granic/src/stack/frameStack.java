@@ -21,6 +21,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
+import java.awt.Color;
 
 
 public class frameStack extends JFrame{
@@ -47,29 +48,26 @@ public class frameStack extends JFrame{
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(200, 200, 500, 500);
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBackground(Color.LIGHT_GRAY);
+		contentPane.setBorder(new EmptyBorder(2, 2, 2, 2));
 		setContentPane(contentPane);
-		setTitle("Granic Jovan IT76-2021");
+		setTitle("Jovan Granic IT-76/2021");
 		
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		// List of circles - show action
 		dlm = new DefaultListModel<Circle>();
-//		Circle circle = new Circle(new Point(1, 1), 2);
 		listCircle = new JList();
 		
-		// Additional panel for buttons
 		JPanel pnlSouth = new JPanel();
+		pnlSouth.setBackground(Color.LIGHT_GRAY);
 		contentPane.add(pnlSouth, BorderLayout.SOUTH);
 		
-		// Button for adding
 		JButton btnAddCircleButton = new JButton("Add");
 		btnAddCircleButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				addDialogStack dlg = new addDialogStack(false, null);
-				setTitle("Adding circle");
+				setTitle("Current list of circles:");
 				dlg.setVisible(true);
-				System.out.println(dlg.isOk());
 				if(dlg.isOk())
 				{
 					
@@ -88,7 +86,6 @@ public class frameStack extends JFrame{
 		});
 		pnlSouth.add(btnAddCircleButton);
 		
-		// Button for removing
 		JButton btnRemoveCircleButton = new JButton("Remove");
 		btnRemoveCircleButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -96,7 +93,7 @@ public class frameStack extends JFrame{
 					try
 					{
 						addDialogStack dlg = new addDialogStack(true, dlm.elementAt(i));	
-						dlg.setTitle("Removing circle");
+						dlg.setTitle("Current list of circles:");
 						dlg.setVisible(true);
 
 						if(dlg.isOk())

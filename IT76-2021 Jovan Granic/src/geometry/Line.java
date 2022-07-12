@@ -4,29 +4,67 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class Line extends Shape {
-	private Point startPoint; 
+
+	private Point startPoint;
 	private Point endPoint;
-	
+
 	public Line() {
-		//inicijalizaciju mozemo raditi i u samoj klasi
-		//this.startPoint = new Point();
-		//this.endPoint = new Point();
 	}
-	
+
 	public Line(Point startPoint, Point endPoint) {
 		this.startPoint = startPoint;
 		this.endPoint = endPoint;
 	}
-	
-	public Line(Point startPoint, Point endPoint, boolean selected) {
+
+	public Line(Point startPoint, Point endPoint, Color color) {
 		this(startPoint, endPoint);
-		this.selected = selected;	
+		this.color = color;
 	}
-	
-	public double length() {
-		//duzinu linije racunamo kao udaljenost endPoint tacke i startPoint tacke
-		//koristimo distance metodu definisanu u Point klasi
-		return this.endPoint.distance(this.startPoint.getX(), this.endPoint.getY());
+
+	public Line(Point startPoint, Point endPoint, Color color, boolean selected) {
+		this(startPoint, endPoint, color);
+		this.selected = selected;
+	}
+
+	public boolean equals(Object obj) {
+		if (obj instanceof Line) {
+			Line pomocna = (Line) obj;
+			if (this.startPoint.equals(pomocna.startPoint) && this.endPoint.equals(pomocna.endPoint))
+				return true;
+			else
+				return false;
+		} else
+			return false;
+	}
+
+	public boolean contains(int x, int y) {
+		return this.startPoint.distance(x, y) + this.endPoint.distance(x, y) - length() <= 2;
+	}
+
+	public boolean contains(Point clickPoint) {
+		return this.startPoint.distance(clickPoint.getX(), clickPoint.getY())
+				+ this.endPoint.distance(clickPoint.getX(), clickPoint.getY()) - length() <= 2;
+	}
+
+	@Override
+	public void moveTo(int x, int y) {
+		startPoint.moveTo(x, y);
+		endPoint.moveTo(x, y);
+	}
+
+	@Override
+	public void moveBy(int byX, int byY) {
+		startPoint.moveBy(byX, byY);
+		endPoint.moveBy(byX, byY);
+	}
+
+	@Override
+	public int compareTo(Object obj) {
+		if (obj instanceof Line) {
+			Line shapeToCompare = (Line) obj;
+			return (int) (this.length() - shapeToCompare.length());
+		}
+		return 0;
 	}
 
 	public Point getStartPoint() {
@@ -38,69 +76,32 @@ public class Line extends Shape {
 	}
 
 	public Point getEndPoint() {
-		return this.endPoint;
+		return endPoint;
 	}
 
 	public void setEndPoint(Point endPoint) {
 		this.endPoint = endPoint;
 	}
-	
-	@Override
+
+	public double length() {
+		return startPoint.distance(endPoint.getX(), getEndPoint().getX());
+	}
+
 	public String toString() {
-		//return "("+this.startPoint.getX()+","+this.startPoint.getY()+")"+"--> ("+this.endPoint.getX()+","+this.endPoint.getY()+")";
-		return this.startPoint + "-->" + this.endPoint;
+		return startPoint + "-- >" + endPoint;
 	}
-	
+
 	@Override
-	public boolean equals(Object obj) {
-		if(obj instanceof Line) {
-			Line l = (Line)obj;
-			if(this.getStartPoint().equals(l.getStartPoint()) && this.getEndPoint().equals(l.getEndPoint())) {
-				return true;
-			} else {
-				return false;
-			}
-		}else {
-			return false;
-		}
-	}
-	
-	public boolean contains(int x, int y) {
-		double d = this.getStartPoint().distance(x, y) + this.getEndPoint().distance(x, y);
-		return d - this.length() <= 2;
-	}
-	
-	public boolean contains(Point point) {
-		double d = this.getStartPoint().distance(point.getX(), point.getY()) + this.getEndPoint().distance(point.getX(), point.getY());
-		return d - this.length() <= 2;
-	}
-	
 	public void draw(Graphics g) {
-		g.drawLine(this.startPoint.getX(), this.getStartPoint().getY(), this.endPoint.getX(), this.endPoint.getY());
-		if(this.isSelected()) {
+		g.setColor(this.color);
+		g.drawLine(startPoint.getX(), startPoint.getY(), this.endPoint.getX(), endPoint.getY());
+
+		if (isSelected()) {
 			g.setColor(Color.BLUE);
-			g.drawRect(this.startPoint.getX()-2, this.startPoint.getY()-2, 4, 4);
-			g.drawRect(this.endPoint.getX()-2, this.endPoint.getY()-2, 4, 4);
+			g.drawRect(startPoint.getX() - 2, startPoint.getY() - 2, 4, 4);
+			g.drawRect(endPoint.getX() - 2, endPoint.getY() - 2, 4, 4);
 			g.setColor(Color.black);
 		}
+	}
 
-	}
-	
-	public void moveBy(int x, int y) {
-		this.startPoint.moveBy(x, y);
-		this.endPoint.moveBy(x, y);
-	}
-	
-	public void moveTo(int x, int y) {
-		this.startPoint.moveTo(x, y);
-		this.endPoint.moveTo(x, y);
-	}
-	
-	public int compareTo(Object o) {
-		if(o instanceof Line) {
-			return (int)(this.length()-((Line)o).length());
-		}
-		return 0;
-	}
-	
 }
