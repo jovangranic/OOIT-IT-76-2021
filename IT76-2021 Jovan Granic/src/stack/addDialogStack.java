@@ -1,4 +1,4 @@
-package stack;
+	package stack;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -125,7 +125,6 @@ public class addDialogStack extends JDialog {
 	}
 	
 		
-		//default constructor za frameSort
 	public addDialogStack() {
 		setBackground(Color.LIGHT_GRAY);
 		getContentPane().setBackground(Color.WHITE);

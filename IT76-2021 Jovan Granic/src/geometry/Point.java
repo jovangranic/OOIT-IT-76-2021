@@ -76,7 +76,7 @@ public class Point extends Shape {
 		this.y += byY;
 	}
 
-	@Override
+		@Override
 	public int compareTo(Object obj) {
 		if (obj instanceof Point) {
 			Point shapeToCompare = (Point) obj;

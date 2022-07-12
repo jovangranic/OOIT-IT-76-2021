@@ -91,7 +91,7 @@ public class Line extends Shape {
 		return startPoint + "-- >" + endPoint;
 	}
 
-	@Override
+		@Override
 	public void draw(Graphics g) {
 		g.setColor(this.color);
 		g.drawLine(startPoint.getX(), startPoint.getY(), this.endPoint.getX(), endPoint.getY());
