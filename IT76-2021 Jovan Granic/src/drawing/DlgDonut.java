@@ -37,9 +37,7 @@ public class DlgDonut extends JDialog {
 	private Color edgeColor;
 	private Color fillColor;
 
-	/**
-	 * Launch the application.
-	 */
+
 	public static void main(String[] args) {
 		try {
 			DlgDonut dialog = new DlgDonut();
@@ -50,9 +48,6 @@ public class DlgDonut extends JDialog {
 		}
 	}
 
-	/**
-	 * Create the dialog.
-	 */
 	public DlgDonut() {
 		getContentPane().setBackground(Color.LIGHT_GRAY);
 		setModal(true);

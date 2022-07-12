@@ -43,9 +43,7 @@ public class DlgCircle extends JDialog {
 
 	private Color color;
 
-	/**
-	 * Launch the application.
-	 */
+	
 	public static void main(String[] args) {
 		try {
 			DlgCircle dialog = new DlgCircle();
