@@ -91,7 +91,7 @@ public class frameSort extends JFrame {
 		JButton btnSort = new JButton("Sort");
 		btnSort.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(!dlm.isEmpty())	
+				if(!dlm.isEmpty())
 				{
 					Circle[] CircleArray = new Circle[dlm.getSize()];
 					for (int i = 0; i < CircleArray.length; i++)
